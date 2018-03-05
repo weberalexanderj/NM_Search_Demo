@@ -1,0 +1,202 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Landing Page - Start Bootstrap Theme</title>
+
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link href={% static "vendor/bootstrap/css/bootstrap.min.css" %} rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href={% static "vendor/font-awesome/css/font-awesome.min.css" %} rel="stylesheet" type="text/css">
+    <link href={% static "vendor/simple-line-icons/css/simple-line-icons.css" %} rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template -->
+    <link href={% static "css/landing-page.min.css" %} rel="stylesheet">
+
+  </head>
+
+  <body>
+
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-light bg-light static-top">
+      <div class="container">
+        <a class="navbar-brand" href="https://getbootstrap.com/">Based on a Bootstrap Template</a>
+        <a class="btn btn-primary" href="https://www.linkedin.com/in/alexander-weber-0aa729b4/">by Alex Weber</a>
+      </div>
+    </nav>
+
+    <!-- Search -->
+    <header class="masthead text-white text-center">
+        <div class="container">
+            <div class="col-xl-9 mx-auto">
+                <h1 class="mb-5">Start searching for MTG cards by name!</h1>
+            </div>
+            <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+                <form id="input" action="" method="post" >
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="col-12 col-md-9 mb-2 mb-md-0">
+                            <input type="text" name="keywords" class="form-control form-control-lg" placeholder="Enter search term here...">
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <button type="submit" class="btn btn-block btn-lg btn-primary">Search!</button>
+                        </div>
+                    </div>
+                </form>
+                <script>
+                    /* attach a submit handler to the form */
+                    $("#input").submit(function(event) {
+
+                    /* stop form from submitting normally */
+                    event.preventDefault();
+
+                    /* get some values from elements on the page: */
+                    var $form = $(this),
+                    term = $form.find('input[name="keywords"]').val(),
+                    url = $form.attr('action');
+
+                    /* Send the data using post */
+                    var posting = $.post(url, {s: term});
+
+                    $.ajax({
+                      type: "POST",
+                      url: url,
+                      data: data,
+                      success: function(response){
+                        $('#results').html(response);   //select the id and put the response in the html
+                      },
+                      dataType: dataType
+                    });
+
+                    /* Put the results in a div */
+                    posting.done(function(data) {
+                       $("#results").load(location.href + " #results");});
+                </script>
+            </div>
+        </div>
+    </header>
+
+    <!-- Results -->
+    <section class="testimonials text-center bg-light">
+        <div class="container">
+            <form id="results">
+                <table>
+                    {% for i in cards %}
+                        <tr>
+                            <td> <img src="{{ i.image_url }}"> </td>
+                            <td> {{ i.name }} </td>
+                            <td> {{ i.type }} </td>
+                            <td> {{ i.mana_cost }} </td>
+                            <td> {{ i.power }}/{{ i.toughness }}</td>
+                            <td> {{ i.set_name }} </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </form>
+        </div>
+    </section>
+
+
+    <!-- Image Showcases -->
+    <section class="showcase">
+      <div class="container-fluid p-0">
+        <div class="row no-gutters">
+
+          <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url({% static 'img/ColoradoHiking2.jpg' %});"></div>
+          <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+            <h2>About Me</h2>
+            <p class="lead mb-0"> I'm a software engineer graduating in May 2018 with multiple years of experience in a global corporate environment.  I've worked numerous different projects - everything from hardware to networking to test automation! </p>
+          </div>
+        </div>
+        <div class="row no-gutters">
+          <div class="col-lg-6 text-white showcase-img" style="background-image: url({% static 'img/PuraVida.jpg' %});"></div>
+          <div class="col-lg-6 my-auto showcase-text">
+            <h2>Personal Life</h2>
+            <p class="lead mb-0">I'm a fun and outgoing individual that loves the outdoors, but also loves technology and has plenty of nerdy hobbies. I encourage you to check out some of the links in this page to my Linkin/Facebook to get a better picture!</p>
+          </div>
+        </div>
+        <div class="row no-gutters">
+          <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url({% static 'img/mtg_mana_symbols.png' %});"></div>
+          <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+            <h2>Hobbies</h2>
+            <p class="lead mb-0">
+              <li> Brazilian Jiu-Jitsu/MMA </li>
+              <li> Magic the Gathering </li>
+              <li> Camping, Hiking, Swimming </li>
+              <li> Travel </li>
+              <li> Gaming </li>
+            </p>
+          </div>
+        </div>
+        <div class="row no-gutters">
+          <div class="col-lg-6 text-white showcase-img" style="background-image: url({% static 'img/bg-showcase-2.jpg' %});"></div>
+          <div class="col-lg-6 my-auto showcase-text">
+            <h2>Thank you!</h2>
+            <p class="lead mb-0">This was an incredibly fun project to work on and it made me realize how much I enjoy web development. </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+            <ul class="list-inline mb-2">
+              <li class="list-inline-item">
+                <a href="https://www.facebook.com/geno.weber/photos?lst=100002974191336%3A100002974191336%3A1520186984&source_ref=pb_friends_tl">Facebook</a>
+              </li>
+              <li class="list-inline-item">&sdot;</li>
+              <li class="list-inline-item">
+                <a href="https://www.linkedin.com/in/alexander-weber-0aa729b4/">LinkedIn</a>
+              </li>
+              <li class="list-inline-item">&sdot;</li>
+              <li class="list-inline-item">
+                <a href="mailto:weberalexanderj@gmail.com">Email</a>
+              </li>
+            </ul>
+            <p class="text-muted small mb-4 mb-lg-0">&copy; Your Website 2018. All Rights Reserved.</p>
+          </div>
+          <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
+            <ul class="list-inline mb-0">
+              <li class="list-inline-item mr-3">
+                <a href="https://www.facebook.com/geno.weber/photos?lst=100002974191336%3A100002974191336%3A1520186984&source_ref=pb_friends_tl">
+                  <i class="fa fa-facebook fa-2x fa-fw"></i>
+                </a>
+              </li>
+              <li class="list-inline-item mr-3">
+                <a href="#">
+                  <i class="fa fa-twitter fa-2x fa-fw"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#">
+                  <i class="fa fa-instagram fa-2x fa-fw"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src={% static "vendor/jquery/jquery.min.js" %}></script>
+    <script src={% static "vendor/bootstrap/js/bootstrap.bundle.min.js" %}></script>
+
+  </body>
+
+</html>

@@ -1,0 +1,35 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Demo</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="search">
+        <form action="" method="GET"  accept-charset="utf-8"> {% csrf_token %}
+            <input type="text" name="searchBox" placeholder="Enter search here...">
+            <input type="submit" value="Search">
+        </form>
+    </div>
+    <br/>
+    <br/>
+    <div class="results">
+        <table>
+            {% for i in cards %}
+                <tr>
+{#                    <td> {{ i.name }} </td>#}
+                    <td> {{ i.type }} </td>
+                    <td> {{ i.mana_cost }} </td>
+                    <td> {{ i.power }}/{{ i.toughness }}</td>
+                    <td> {{ i.set_name }} </td>
+                    <td> {{ i.release_date }} </td>
+                    <td> {{ i.image_url }} </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
