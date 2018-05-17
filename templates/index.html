@@ -44,11 +44,21 @@
                 <h1 class="mb-5">Start searching for MTG cards by name!</h1>
             </div>
             <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-                <form id="input" action="" method="post" >
+                <form id="input" action="" method="get" >
                     {% csrf_token %}
                     <div class="form-row">
                         <div class="col-12 col-md-9 mb-2 mb-md-0">
                             <input type="text" name="keywords" class="form-control form-control-lg" placeholder="Enter search term here...">
+                        </div>
+                        <div>
+                            <label>
+                                Searching by:
+                            </label>
+                            <select name="searchFilter" id="searchFilter">
+                              <option value="Name">Name</option>
+                              <option value="Type">Type</option>
+                              <option value="Set">Set</option>
+                            </select>
                         </div>
                         <div class="col-12 col-md-3">
                             <button type="submit" class="btn btn-block btn-lg btn-primary">Search!</button>
@@ -117,7 +127,9 @@
           <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url({% static 'img/ColoradoHiking2.jpg' %});"></div>
           <div class="col-lg-6 order-lg-1 my-auto showcase-text">
             <h2>About Me</h2>
-            <p class="lead mb-0"> I'm a software engineer graduating in May 2018 with multiple years of experience in a global corporate environment.  I've worked numerous different projects - everything from hardware to networking to test automation! </p>
+            <p class="lead mb-0"> <br/>I'm a software engineer graduating in May 2018 with multiple years of experience in a global corporate environment.  I've worked numerous different projects - everything from hardware to networking to test automation!
+
+            </p>
           </div>
         </div>
         <div class="row no-gutters">

@@ -26,13 +26,24 @@ def CardListView(request, pk):
 
 def index(request):
     # if request.method == "POST":
-    search_term=request.POST.get('keywords')
-    #search_term="Bolt"
-    cards = Card.where(name=search_term).all()
+    search_term = request.GET.get('keywords')
+    search_filter = request.GET.get('searchFilter')
+
+    print("Search type: " + search_filter)
+
+    if search_filter == 'Type':
+        cards = Card.where(subtypes=search_term).all()
+    elif search_filter == 'Set':
+        cards = Card.where(set_name=search_term).all()
+    else:
+        cards = Card.where(name=search_term).all()
+
     card_query = cards
     form = CardDisplayForm()
     context = {'cards': card_query, 'form': form }
     if search_term is None:
         context = {}
     return render(request, 'index.html', context)
+
+
 
