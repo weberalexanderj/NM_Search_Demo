@@ -29,8 +29,6 @@ def index(request):
     search_term = request.GET.get('keywords')
     search_filter = request.GET.get('searchFilter')
 
-    print("Search type: " + search_filter)
-
     if search_filter == 'Type':
         cards = Card.where(subtypes=search_term).all()
     elif search_filter == 'Set':
